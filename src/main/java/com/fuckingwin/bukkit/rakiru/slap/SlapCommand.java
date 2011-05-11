@@ -26,7 +26,7 @@ public class SlapCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender slapper, Command command, String label, String[] split) {
         if (plugin.usePermissions) {
-            if (!(plugin.permissionHandler.has((Player)slapper, "slap.slap"))) {
+            if (!(plugin.permissionHandler.has((Player) slapper, "slap.slap"))) {
                 slapper.sendMessage(ChatColor.RED + "You do not have permission to use this command");
                 return true;
             }
@@ -36,7 +36,7 @@ public class SlapCommand implements CommandExecutor {
         }
         String slapperName;
         if (slapper instanceof Player) {
-            Player slapperCast = (Player)slapper;
+            Player slapperCast = (Player) slapper;
             slapperName = slapperCast.getDisplayName();
         } else if (slapper instanceof ConsoleCommandSender) {
             slapperName = "Console";
@@ -49,22 +49,28 @@ public class SlapCommand implements CommandExecutor {
             if (matchedPlayers.size() == 1) {
                 //player found with no force argument
                 if (split.length == 1) {
-                    slapPlayer(matchedPlayers.get(0),2,slapperName);
+                    slapPlayer(matchedPlayers.get(0), 2, slapperName);
                 } else {
-                    float force = Float.parseFloat(split[1]);
+                    float force;
+                    try {
+                        force = Float.parseFloat(split[1]);
+                    } catch (NumberFormatException e) {
+                        slapper.sendMessage("Force must be a number");
+                        return true;
+                    }
                     if (force > 10) {
                         force = 10;
                     } else if (force <= 0) {
                         force = 0.1f;
                     }
-                    slapPlayer(matchedPlayers.get(0),force,slapperName);
+                    slapPlayer(matchedPlayers.get(0), force, slapperName);
                 }
             } else if (matchedPlayers.isEmpty()) {
                 //player not found
                 slapper.sendMessage("Player " + slappeeName + " not found");
-            } else if (matchedPlayers.size() > 1 ) {
+            } else if (matchedPlayers.size() > 1) {
                 //Multiple matching players found
-               slapper.sendMessage(slappeeName + " matches multiple players");
+                slapper.sendMessage(slappeeName + " matches multiple players");
             } else {
                 //Unknown error
                 slapper.sendMessage("Ah, crap!");
@@ -77,7 +83,7 @@ public class SlapCommand implements CommandExecutor {
 
     private void slapPlayer(Player slappee, float force, String slapperName) {
         Random randomGen = new Random();
-        Vector newVelocity = new Vector((randomGen.nextFloat()*1.5-0.75)*force,randomGen.nextFloat()/2.5+(0.4*force),(randomGen.nextFloat()*1.5-0.75)*force);
+        Vector newVelocity = new Vector((randomGen.nextFloat() * 1.5 - 0.75) * force, randomGen.nextFloat() / 2.5 + (0.4 * force), (randomGen.nextFloat() * 1.5 - 0.75) * force);
         slappee.setVelocity(newVelocity);
         String slappeeName = slappee.getDisplayName();
         // Change message depending on the force
