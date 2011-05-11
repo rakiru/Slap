@@ -2,6 +2,7 @@ package com.fuckingwin.bukkit.rakiru.slap;
 
 import java.util.List;
 import java.util.Random;
+import java.lang.Math;
 import org.bukkit.util.Vector;
 import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
@@ -79,7 +80,19 @@ public class SlapCommand implements CommandExecutor {
         Vector newVelocity = new Vector((randomGen.nextFloat()*1.5-0.75)*force,randomGen.nextFloat()/2.5+(0.4*force),(randomGen.nextFloat()*1.5-0.75)*force);
         slappee.setVelocity(newVelocity);
         String slappeeName = slappee.getDisplayName();
-        //Have a switch/select here for "slapped X hard!" or "bitchslapped X!"
-        plugin.getServer().broadcastMessage(slapperName + " slapped " + slappeeName + "!");
+        // Change message depending on the force
+        String prefix = "slapped";
+        String suffix = "";
+        if (force == 10) {
+            prefix = "bitchslapped";
+        } else if (force >= 7) {
+            suffix = " and left a mark";
+        } else if (force >= 4) {
+            suffix = " hard";
+        } else if (force < 1) {
+            prefix = "touched";
+            suffix = "'s face";
+        }
+        plugin.getServer().broadcastMessage(slapperName + " " + prefix + " " + slappeeName + suffix + "!");
     }
 }
