@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.ChatColor;
+import org.bukkit.util.config.Configuration;
 
 /**
  * Handler for the /slap command.
