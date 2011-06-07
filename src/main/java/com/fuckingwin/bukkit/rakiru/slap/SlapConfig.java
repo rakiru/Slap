@@ -52,6 +52,7 @@ public class SlapConfig {
     private static void setSettings() {
 
         debugMode = config.getBoolean("debug", false);
+        messages = config.getProperty("messages");
 
         SlapPlugin.log.debug(messages.keySet().toString());
         
