@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.io.File;
+import java.util.Set;
 
 import org.bukkit.util.config.Configuration;
 
 public class SlapConfig {
-    
+
     /**
      * Settings
      */
-
     public static HashMap<Integer, String> messages = new HashMap<Integer, String>();
-
+    public static String msg[] = new String[11];
+    public static boolean debugMode = false;
     /**
      * Bukkit config class
      */
@@ -37,10 +38,12 @@ public class SlapConfig {
 
         if (!file.exists()) {
             config.setProperty("messages", getDefaultMessages());
+            config.setProperty("debug", debugMode);
             config.save();
         }
 
         setSettings();
+
     }
 
     /**
@@ -48,13 +51,42 @@ public class SlapConfig {
      */
     private static void setSettings() {
 
-        List<Integer> keys = config.getKeys("messages");
+        debugMode = config.getBoolean("debug", false);
 
-        if (keys != null) {
-            for (Integer key : keys) {
-                messages.put(key, config.getString("messages." + key));
+        SlapPlugin.log.debug(messages.keySet().toString());
+        
+        SlapPlugin.log.debug("First round");
+        for (int i = 0; i < 11; i++) {
+            if (messages.containsKey(i)) {
+                SlapPlugin.log.debug("messages contains key " + i + " which has value of " + messages.get(i));
+                msg[i] = messages.get(i);
+            } else if (i>0) {
+                msg[i] = msg[i-1];
             }
+            SlapPlugin.log.debug(msg[i]);
         }
+        if (msg[10] == null) {
+            SlapPlugin.log.debug("msg 10 is null");
+            msg[10] = "{SLAPPER} slapped {PLAYER}!";
+        }
+        SlapPlugin.log.debug("Second round");
+        for (int i = 9; i > -1; i--) {
+            if (msg[i] == null) {
+                msg[i] = msg[i+1];
+            }
+            SlapPlugin.log.debug(msg[i]);
+        }
+
+//        List<String> keys = config.getKeys("messages");
+//            for (String key : keys) {
+//		try {
+//			int keyInt = Integer.parseInt(key);
+//                	messages.put(keyInt, config.getString("messages." + key));
+//		} catch (NumberFormatException nfe) {
+//			nfe.printStackTrace();
+//			// Do whatever if you want to do on a fucked up config here
+//		}
+//            }
     }
 
     private static HashMap<Integer, String> getDefaultMessages() {

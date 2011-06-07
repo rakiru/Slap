@@ -27,7 +27,7 @@ public class SlapCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender slapper, Command command, String label, String[] split) {
         if (plugin.usePermissions) {
-            if (!(plugin.permissionHandler.has((Player) slapper, "slap.slap"))) {
+            if (slapper instanceof Player && !(plugin.permissionHandler.has((Player) slapper, "slap.slap"))) {
                 slapper.sendMessage(ChatColor.RED + "You do not have permission to use this command");
                 return true;
             }
@@ -88,18 +88,9 @@ public class SlapCommand implements CommandExecutor {
         slappee.setVelocity(newVelocity);
         String slappeeName = slappee.getDisplayName();
         // Change message depending on the force
-        String prefix = "slapped";
-        String suffix = "";
-        if (force == 10) {
-            prefix = "bitchslapped";
-        } else if (force >= 7) {
-            suffix = " and left a mark";
-        } else if (force >= 4) {
-            suffix = " hard";
-        } else if (force < 1) {
-            prefix = "touched";
-            suffix = "'s face";
-        }
-        plugin.getServer().broadcastMessage(slapperName + " " + prefix + " " + slappeeName + suffix + "!");
+        String message = SlapConfig.msg[(int) Math.floor(force)];
+        message = message.replace("{SLAPPER}", slapperName);
+        message = message.replace("{PLAYER}", slappeeName);
+        plugin.getServer().broadcastMessage(message);
     }
 }

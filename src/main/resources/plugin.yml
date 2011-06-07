@@ -1,6 +1,6 @@
 name: Slap
 main: com.fuckingwin.bukkit.rakiru.slap.SlapPlugin
-version: 0.5.2
+version: 0.6.5
 description: Slap your players about. Show them who's boss.
 commands:
   slap:

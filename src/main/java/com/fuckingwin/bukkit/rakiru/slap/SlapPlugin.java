@@ -11,6 +11,7 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import org.bukkit.plugin.Plugin;
 import java.util.logging.Logger;
+import org.bukkit.util.config.Configuration;
 
 /**
  * Slap plugin for bukkit
@@ -21,7 +22,7 @@ public class SlapPlugin extends JavaPlugin {
 
     public static PermissionHandler permissionHandler;
     public boolean usePermissions;
-    protected final static Logger log = Logger.getLogger("Minecraft.Slap");
+    public static final SlapLogger log = new SlapLogger();
 
     public void onDisable() {
         // Output to console that plugin is disabled
@@ -30,6 +31,9 @@ public class SlapPlugin extends JavaPlugin {
     }
 
     public void onEnable() {
+        // Load config
+        SlapConfig.load();
+        
         // Get plugin info from plugin.yml
         PluginDescriptionFile pdfFile = this.getDescription();
 
