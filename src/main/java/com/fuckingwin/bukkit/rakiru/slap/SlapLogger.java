@@ -8,24 +8,28 @@ import java.util.logging.Logger;
  */
 public class SlapLogger {
 
-    public static final Logger logger = Logger.getLogger("Minecraft");
-
-    public void debug( String s ) {
-        if(SlapConfig.debugMode) {
-	logger.log(Level.INFO, "[Slap DEBUG] " + s);
+	private SlapPlugin plugin;
+	private static final Logger logger = Logger.getLogger("minecraft");
+	
+	public SlapLogger(SlapPlugin plugin) {
+		this.plugin = plugin;
 	}
-    }
 
-    public void info( String s ) {
-	logger.log(Level.INFO, "[Slap] " + s);
-    }
+	public void debug(String s) {
+		if (plugin.config.isDebug()) {
+			logger.log(Level.INFO, "[Slap DEBUG] " + s);
+		}
+	}
 
-    public void severe( String s ) {
-	logger.log(Level.SEVERE, "[Slap] " + s);
-    }
+	public void info(String s) {
+		logger.log(Level.INFO, "[Slap] " + s);
+	}
 
-    public void warning( String s ) {
-	logger.log(Level.WARNING, "[Slap] " + s);
-    }
+	public void severe(String s) {
+		logger.log(Level.SEVERE, "[Slap] " + s);
+	}
 
+	public void warning(String s) {
+		logger.log(Level.WARNING, "[Slap] " + s);
+	}
 }

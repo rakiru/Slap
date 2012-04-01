@@ -1,8 +1,18 @@
 name: Slap
 main: com.fuckingwin.bukkit.rakiru.slap.SlapPlugin
-version: 0.6.6
+version: 0.8.0
 description: Slap your players about. Show them who's boss.
 commands:
   slap:
     description: Slaps a player in a random direction
     usage: "Usage: /slap <username> [force:0-10] to slap a player into the air"
+  megaslap:
+    description: Slaps every player in a random direction
+    usage: "Usage: /slap [force:0-10] [broadcast:true|false] to slap every player into the air"
+permissions:
+  slap.slap:
+    description: Slap a player
+    default: op
+  slap.megaslap:
+    description: Slap everyone
+    default: op
