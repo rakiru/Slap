@@ -5,9 +5,11 @@ description: Slap your players about. Show them who's boss.
 commands:
   slap:
     description: Slaps a player in a random direction
+    permission: slap.slap
     usage: "Usage: /slap <username> [force:0-10] to slap a player into the air"
   megaslap:
     description: Slaps every player in a random direction
+    permission: slap.megaslap
     usage: "Usage: /slap [force:0-10] [broadcast:true|false] to slap every player into the air"
 permissions:
   slap.slap:
